@@ -1,58 +1,160 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div id="app">
+    <v-app id="inspire">
+      <v-container>
+        <v-row
+          ><v-btn @click="add">ADD</v-btn
+          ><v-btn @click="remove">REMOVE</v-btn></v-row
+        >
+        <v-data-table :headers="headers" :items="desserts">
+          <template v-slot:body="props">
+            <tr
+              v-for="(item, i) in props.items"
+              :key="i"
+            >
+              <td v-for="(header, index) in headers" :key="index">
+                <div v-if="index" class="checkbox-wrapper">
+                   <div>
+                  <label for="">C</label>
+                  <div>
+                    <input type="checkbox" />
+                  </div>
+                  
+                </div>
+                <div>
+                  <label for="">R</label>
+                  <div>
+                    <input type="checkbox" />
+                  </div>
+                </div>
+                <div>
+                  <label for="">U</label>
+                  <div>
+                    <input type="checkbox" />
+                  </div>
+                </div>
+                <div>
+                  <label for="">D</label>
+                  <div>
+                    <input type="checkbox" />
+                  </div>
+                </div>
+                </div>
+                <!-- <span v-if="index">{{ item.cols[index - 1] }}</span> -->
+                <span v-else>{{ item.name }}</span>
+              </td>
+            </tr>
+          </template>
+        </v-data-table>
+      </v-container>
+    </v-app>
   </div>
 </template>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
 <script>
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
-</script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
+export default {
+  name: "HelloWorld",
+  data() {
+    return {
+      index: 0,
+      headers: [
+        {
+          text: "Name",
+          align: "start",
+          sortable: true,
+          value: "name",
+        },
+        { text: "Head of Sales", value: "headOfSales", align: "start" },
+      ],
+      data: [
+    {
+      "id": 17,
+      "roleName": "Head of Sales",
+    },
+    {
+      "id": 16,
+      "roleName": "TMO Reviewer",
+    },
+    {
+      "id": 15,
+      "roleName": "TMO User",
+    },
+    {
+      "id": 14,
+      "roleName": "O2C Head",
+    },
+    {
+      "id": 13,
+      "roleName": "O2C User",
+    },
+    {
+      "id": 12,
+      "roleName": "Business Finance Head",
+    },
+    {
+      "id": 11,
+      "roleName": "Business Finance User",
+    },
+    {
+      "id": 10,
+      "roleName": "Delivery partner User",
+    },
+    {
+      "id": 9,
+      "roleName": "Account manager",
+    },
+    {
+      "id": 8,
+      "roleName": "Delivery Partner Head",
+    }
+  ],
+      desserts: [
+        {
+          name: "Dashboard",
+          cols: [0],
+        },
+      ],
+    };
+  },
+  mounted() {
+    this.index = this.headers.length;
+  },
+  methods: {
+  
+    add() {
+      //    this.desserts.push({
+      //   name:'dsaf',
+      //   cols:[7]
+      // })
+      this.desserts.forEach((item) => {
+        item.cols.push("val" + this.index);
+      });
+      this.headers.push({ text: this.data.map((e)=>e.roleName), value: "sddss" });
+
+      this.index++;
+    },
+    remove() {
+      this.headers.pop();
+      this.desserts.forEach((item) => {
+        item.cols.pop();
+      });
+      this.index--;
+    },
+  },
+};
+</script>
+<style lang="css" scoped>
+.checkbox-wrapper{
+  display: flex;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+.checkbox-wrapper > div {
+  margin-left: 8px;
+} 
+.v-data-table > .v-data-table__wrapper > table > thead > tr > th{
+  padding: none;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
+
+
 </style>
