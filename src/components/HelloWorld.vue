@@ -58,6 +58,7 @@ export default {
   data() {
     return {
       index: 0,
+      roles:[],
       headers: [
         {
           text: "Name",
@@ -107,7 +108,43 @@ export default {
     {
       "id": 8,
       "roleName": "Delivery Partner Head",
+    },
+     {
+      "id": 7,
+      "roleName": "Client partner Head",
+  
+    },
+    {
+      "id": 6,
+      "roleName": "Client partner user",
+  
+    },
+    {
+      "id": 5,
+      "roleName": "Legal Head",
+  
+    },
+    {
+      "id": 4,
+      "roleName": "Legal Reviewer",
+  
+    },
+    {
+      "id": 3,
+      "roleName": "Legal User",
+  
+    },
+    {
+      "id": 2,
+      "roleName": "CG Team",
+  
+    },
+    {
+      "id": 1,
+      "roleName": "CG Head",
+  
     }
+
   ],
       desserts: [
         {
@@ -119,9 +156,11 @@ export default {
   },
   mounted() {
     this.index = this.headers.length;
+    this.roles=this.data.map((e)=>e.roleName)
+    console.log(this.roles,'rolessss');
   },
   methods: {
-  
+    
     add() {
       //    this.desserts.push({
       //   name:'dsaf',
@@ -130,7 +169,7 @@ export default {
       this.desserts.forEach((item) => {
         item.cols.push("val" + this.index);
       });
-      this.headers.push({ text: this.data.map((e)=>e.roleName), value: "sddss" });
+      this.headers.push({ text: this.roles[this.index], value: "sddss" });
 
       this.index++;
     },
